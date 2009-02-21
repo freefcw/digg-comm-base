@@ -1,0 +1,42 @@
+<div class="wrap">
+<h2>Comments Digg Options</h2>
+
+<form method="post" action="options.php">
+<?php wp_nonce_field('update-options'); ?>
+<h3>Usage</h3>
+<p style="margin-left:10px">It's so easy to use that you don't need to add much code</p>
+
+<h3>Settings</h3>
+
+<table class="form-table">
+
+<tr valign="top">
+<th scope="row">The text for "digg up" <b style="color:red">*</b></th>
+<td><input type="text" name="cmt_digg_vote_up" value="<?php echo get_option('cmt_digg_vote_up'); ?>" /></td>
+</tr>
+
+<tr valign="top">
+<th scope="row">The text for "digg down" <b style="color:red">*</b></th>
+<td><input type="text" name="cmt_digg_vote_down" value="<?php echo get_option('cmt_digg_vote_down'); ?>" /><br/>
+	FYI: I didn't make a multi-language package since it's too complicated and not so flexible, just type any words you want in the box to represent "Digg Up"!</td>
+</tr>
+
+
+<script type='text/javascript'>
+
+</script>
+</table>
+
+
+<input type="hidden" name="action" value="update" />
+<input type="hidden" name="page_options" value="gtw_badge_url,gtw_display_number,gtw_data,gtw_update_frequency,gtw_lang" />
+
+<p class="submit">
+<input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
+</p>
+
+</form>
+
+<h3>About</h3>
+<p style="margin-left:10px">This is just a simple plugin that I'm using for my personal blog. And I am not sure whether there are really many guys loves GTalk like me. If you love this idea, please <a href="mailto:awflasher+wp.gtw@gmail.com">mail me</a>. And if there are really enough guys love this idea, I will improve this plugin in the future :)</p>
+</div>
