@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Digg comments
+Plugin Name: Digg Comments
 Plugin URI: http://www.wordpress.org/extends/BETA
 Description: A plugin enables your readers to digg/bury the comments without even a registration!
 Version: 1.0
@@ -27,10 +27,10 @@ class digg_comment
   #  Constructor
   public function digg_comment ()
   {
-    $this->plugin_path = get_bloginfo('wpurl') . '/' . PLUGINDIR . '/' . plugin_basename(__FILE__);
+    $this->plugin_path = WP_PLUGIN_URL.'/'.dirname(plugin_basename(__FILE__));
     $this->plugin_options_path = dirname(plugin_basename(__FILE__)) . '/options.php';
   }
-  
+
   /**
    * Accept AJAX request for voting / burying
    * @return void
@@ -73,7 +73,7 @@ class digg_comment
    * @return boolean Whethc it is an AJAX request
    */
   protected function isAjax() {
-    return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 
+    return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest')) ? TRUE : FALSE;
   }
 
@@ -150,14 +150,14 @@ class digg_comment
   public function add_head()
   {
     // insert css
-    echo '<link type="text/css" rel="stylesheet" href="'. get_option('siteurl').
-        '/wp-content/plugins/digg-comment/css/style.css" />' . "\n";
+    echo '<link type="text/css" rel="stylesheet" href="'.
+    	"{$this->plugin_path}/css/style.css\" />" . "\n";
     echo '<script type="text/javascript">
         var cmt_digg_vote_down = "' . get_option('cmt_digg_vote_down')
         . '";var cmt_digg_vote_up = "' . get_option('cmt_digg_vote_up')
         . '";var url = "' . get_bloginfo('home') .'";</script>';
     // insert javascript
-    $url = get_bloginfo('wpurl') . '/wp-content/plugins/digg-comment/js/digg.js';
+    $url = $this->plugin_path . '/js/digg.js';
     wp_enqueue_script('digg_comment', $url, array('jquery'), '1.0');
   }
 
@@ -264,7 +264,7 @@ class digg_comment
  * 当$start和$end同时为真时，将获的是$start和$end所表示的时间之间的评论的digg降序输出，这时第一个参数 $type无效评论的
  * $start 和$endde 格式为2009-01-06 09:20:04
  * $num 输出的条数
- * 
+ *
  *
  * @param string | numberic $type
  * @param int $num
@@ -356,11 +356,11 @@ add_filter('comment_text', array(&$cmt_digg , 'add_item'), 99999);
 // Adds the required JavaScript and CSS files
 add_action('wp_head', array(&$cmt_digg, 'add_head'), 9);
 
-// Action Hook 
+// Action Hook
 // Adds option in admin menu
 add_action('admin_menu', array(&$cmt_digg , 'wpadmin'));
 
 // Accept AJAX requst
-$cmt_digg->ajax_digg(); 
+$cmt_digg->ajax_digg();
 
 ?>
