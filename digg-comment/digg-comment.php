@@ -350,7 +350,7 @@ register_activation_hook(__FILE__, array(&$cmt_digg , 'uninstall'));
 
 // Filter Hook
 // Adds the vote data to each comment thread
-add_filter('comment_text', array(&$cmt_digg , 'add_item'), 99999);
+add_filter('comment_text', array(&$cmt_digg , 'add_item'), 999);
 
 // Action Hook
 // Adds the required JavaScript and CSS files
