@@ -89,11 +89,11 @@ function getHtml(cid, diggnum, burynum){
 		html += '        <span class="cd-votebtn">' + cmt_digg_vote_down + '</span> <span id="burynum'+cid+'">'+burynum+'</span>';
 	html += '   </div>';
 	html += '   <div class="fL cd-votebar" id="cd-votebar'+cid+'">';
-	html += '  	<table border="0" class="cd-votebar-table">';
+	html += '  	<table border="0" style="width:90px; height:8px" class="cd-votebar-table">';
 	html += '			<tbody>';
 	html += '			<tr>';
-	html += '			<td style="width:'+lratio+'%;background:#ccc" class="burybar bar" id="burybar'+cid+'" />';
-	html += '			<td style="width:'+rratio+'%;background:#ac4" class="diggbar bar" id="diggbar'+cid+'" />';
+	html += '			<td style="width:'+lratio+'%;background:#ccc;padding:0 1px" class="burybar bar" id="burybar'+cid+'" />';
+	html += '			<td style="width:'+rratio+'%;background:#ac4;padding:0 1px" class="diggbar bar" id="diggbar'+cid+'" />';
 	html += '		</tr>';
 	html += '		</tbody></table>';
 	html += '   </div>';
