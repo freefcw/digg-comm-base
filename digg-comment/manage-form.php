@@ -1,5 +1,5 @@
 <div class="wrap">
-<h2>Digg Comments Management</h2>
+<h2>WordPress Digg Comment Management</h2>
 <?php if(isset($message)) : ?>
 <div class="updated fade" id="message" style="background-color: rgb(255, 251, 204);">
 <p><strong><?php echo $message ?></strong></p>
@@ -37,9 +37,9 @@ function changestatus(sw){
 			  if (isset($_REQUEST['orderby'])) {
 					if ($_REQUEST['orderby'] == 'comment_date_gmt') {
 						if (isset($_REQUEST['isasc']) && ! $_REQUEST['isasc']) {
-							echo '↑';
-						} else {
 							echo '↓';
+						} else {
+							echo '↑';
 						}
 					}
 				}
@@ -50,9 +50,9 @@ function changestatus(sw){
 			  if (isset($_REQUEST['orderby'])) {
 					if ($_REQUEST['orderby'] == 'digg') {
 						if (isset($_REQUEST['isasc']) && ! $_REQUEST['isasc']) {
-							echo '↑';
-						} else {
 							echo '↓';
+						} else {
+							echo '↑';
 						}
 					}
 				}
@@ -95,8 +95,8 @@ function changestatus(sw){
 
 <?php
 
-            echo '</p><p>' . $comment->comment_content . '</p>';
-            echo 'In Entry: <a href="' . site_url() . '?p=' . $comment->comment_post_ID . '#comment-' . $comment->comment_ID . '">' . $comment->post_title . '</a>&nbsp;&nbsp;Post date: ' . $comment->post_date;
+            echo '</p><p style="margin-bottom:25px">' . $comment->comment_content . '</p>';
+            echo 'In Entry: <a href="' . site_url() . '?p=' . $comment->comment_post_ID . '#comment-' . $comment->comment_ID . '">' . $comment->post_title . '</a><p style="color:#999">Post date: ' . $comment->post_date .'</p>';
             echo "</td>";
             echo "<td>{$comment->comment_date}</td>";
             echo "<td>{$comment->digg}</td>";
