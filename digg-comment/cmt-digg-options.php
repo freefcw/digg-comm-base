@@ -1,5 +1,5 @@
 <div class="wrap">
-<h2>Comments Digg Options</h2>
+<h2>WordPress Digg Comment Options</h2>
 <form method="post" action="options.php">
 <?php wp_nonce_field('update-options'); ?>
 <h3>Usage</h3>
