@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Digg Comments
-Plugin URI: http://www.wordpress.org/extends/BETA
+Plugin URI: http://www.awflasher.com/blog/archives/1752
 Description: A plugin enables your readers to digg/bury the comments without even a registration!
 Version: 1.0
 Author: Aw Guo
