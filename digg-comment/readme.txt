@@ -3,7 +3,7 @@ Contributors: Aw Guo
 Donate link: http://www.awflasher.com/donations/
 Tags: comment, digg, vote
 Requires at least: 2.2
-Tested up to: 2.7
+Tested up to: 2.7.1
 Stable tag: trunk
 
 Digg or bury your comments and generate a percentage bar in your comment boxes.
