@@ -25,5 +25,5 @@
 
 </form>
 <h3>About</h3>
-<p style="margin-left:10px">This is just a simple plugin that I'm using for my personal blog. And I am not sure whether there are really many guys loves GTalk like me. If you love this idea, please <a href="mailto:awflasher+wp.gtw@gmail.com">mail me</a>. And if there are really enough guys love this idea, I will improve this plugin in the future :)</p>
+<p style="margin-left:10px">This plugin is brought to you by Aw Guo. Twitter: <a href="http://twitter.com/awflasher">@awflasher</a> / blog: <a href="http://www.ifgogo.com/author/admin/">Aw@ifgogo</a></p>. Contact me via: <code>awflasher@gmail.com</code>
 </div>
