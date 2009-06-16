@@ -52,18 +52,18 @@ class digg_comment
     if ($this->isAjax() && $cmt_digg_action && $comment_id
         && in_array($digg_action, array('UP', 'DOWN'))) {
 
-    $cdigg = new cmtdigg();
-    $cdigg->setID($comment_id);
-
-    if ($digg_action == 'UP')
-      $rt = $cdigg->ding();
-    else
-      $rt = $cdigg->bury();
-
-    if ($rt == TRUE)
-      exit('yes');
-    else
-      exit('no');
+      $cdigg = new cmtdigg();
+      $cdigg->setID($comment_id);
+  
+      if ($digg_action == 'UP')
+        $rt = $cdigg->ding();
+      else
+        $rt = $cdigg->bury();
+  
+      if ($rt == TRUE)
+        exit('yes');
+      else
+        exit('no');
     }
   }
 
@@ -141,35 +141,58 @@ class digg_comment
     $wpdb->query($sql);
     */
   }
+
   /**
-   * add
+   * add style files link
    *
    * @return void
-   * @author freefcw
    **/
-  public function add_head()
+  public function add_cssfile()
   {
     // insert css
-    echo '<link type="text/css" rel="stylesheet" href="'.
-    	"{$this->plugin_path}/css/style.css\" />" . "\n";
-    echo '<script type="text/javascript">
-        var cmt_digg_vote_down = "' . get_option('cmt_digg_vote_down')
-        . '";var cmt_digg_vote_up = "' . get_option('cmt_digg_vote_up')
-        . '";var url = "' . get_bloginfo('home') .'";</script>';
-    // insert javascript
-    $url = $this->plugin_path . '/js/digg.js';
-    wp_enqueue_script('digg_comment', $url, array('jquery'), '1.0');
+    $diggCssfile =  WP_PLUGIN_URL . '/digg-comment/css/style.css';
+  
+    wp_register_style('digg_css', $diggCssfile);
+    wp_enqueue_style( 'digg_css');
   }
 
-    /**
-     * add admin menus
-     */
-    public function wpadmin() {
-      add_options_page('Comments Digg', 'Comments Digg', 5, __FILE__,
-          array(&$this, 'manage_comment'));
-      add_options_page('Comments Digg Options', 'Comments Digg Options',
-          'manage_options', dirname(__FILE__).'/cmt-digg-options.php');
-    }
+  /**
+   * write some inline js into head
+   *
+   * @return void
+   */
+  public function echo_js()
+  {
+    echo '<script type="text/javascript" >var cmt_digg_vote_down = "' . get_option('cmt_digg_vote_down')
+      . '";var cmt_digg_vote_up = "' . get_option('cmt_digg_vote_up')
+      . '";var url = "'.get_option('siteurl').'";</script>';
+  }
+
+  /**
+   * add js link in the page
+   *
+   * @return void
+   **/
+  public function add_jsfile()
+  {
+    $url = WP_PLUGIN_URL . '/digg-comment/js/digg.js';
+    //register script first
+    wp_register_script('digg_script', $url, array('jquery'), '1.0', TRUE);
+    //make script into list
+    wp_enqueue_script('digg_script');
+    // or you can direct add script into list
+    //wp_enqueue_script('digg_script', $url, array('jquery'), '1.0', TRUE);
+  }
+
+  /**
+   * add admin menus
+   */
+  public function wpadmin() {
+    add_options_page('Comments Digg', 'Comments Digg', 5, __FILE__,
+        array(&$this, 'manage_comment'));
+    add_options_page('Comments Digg Options', 'Comments Digg Options',
+        'manage_options', dirname(__FILE__).'/cmt-digg-options.php');
+  }
 
   /**
    * comment manage in admin pane
@@ -245,12 +268,9 @@ class digg_comment
                 c.{$orderby}
             LIMIT $start, 20";
 
-    //echo $sql;
-
     $wpdb->query($sql);
     include(dirname(__FILE__) . DS . 'manage-form.php');
   }
-
 }
 ###
 
@@ -341,6 +361,7 @@ function get_most_digg_comments_by_range($type = "daily", $num = 10, $start = fa
 
 
 //registion part
+
 $cmt_digg = new digg_comment();
 
 // installation
@@ -348,13 +369,13 @@ register_activation_hook(__FILE__, array(&$cmt_digg , 'install'));
 // uninstallation
 register_activation_hook(__FILE__, array(&$cmt_digg , 'uninstall'));
 
-// Filter Hook
-// Adds the vote data to each comment thread
+// Filter, add the vote data to each comment thread
 add_filter('comment_text', array(&$cmt_digg , 'add_item'), 999);
 
-// Action Hook
-// Adds the required JavaScript and CSS files
-add_action('wp_head', array(&$cmt_digg, 'add_head'), 9);
+// inject javascript and styles into head section
+add_action('wp_print_styles', array(&$cmt_digg, 'add_cssfile'));
+add_action('wp_print_scripts', array(&$cmt_digg, 'add_jsfile'));
+add_action('wp_head', array(&$cmt_digg, 'echo_js'));
 
 // Action Hook
 // Adds option in admin menu
