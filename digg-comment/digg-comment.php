@@ -175,7 +175,7 @@ class digg_comment
    **/
   public function add_jsfile()
   {
-    $url = WP_PLUGIN_URL . '/digg-comment/js/digg.js';
+    $url = $this->plugin_path . '/js/digg.js';
     //register script first
     wp_register_script('digg_script', $url, array('jquery'), '1.0', TRUE);
     //make script into list
@@ -276,8 +276,6 @@ class digg_comment
 
 
 //globe part
-
-
 /**
  * 当$type为数字时，表示评论id，这时获取的是关于某偏文章的的评论的digg降序输出
  * 当$type为daily、weekly、monthly、yearly时，获取的是对应日、周、月、年之内的评论的digg降序输出
