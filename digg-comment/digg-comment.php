@@ -150,7 +150,7 @@ class digg_comment
   public function add_cssfile()
   {
     // insert css
-    $diggCssfile =  WP_PLUGIN_URL . '/digg-comment/css/style.css';
+    $diggCssfile =  $this->plugin_path . '/css/style.css';
   
     wp_register_style('digg_css', $diggCssfile);
     wp_enqueue_style( 'digg_css');
