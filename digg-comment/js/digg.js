@@ -1,3 +1,7 @@
+cmt_digg_vote_up = WPDiggComment.cmt_digg_vote_up;
+cmt_digg_vote_down = WPDiggComment.cmt_digg_vote_down;
+url = WPDiggComment.siteurl;
+
  /* Awc - cookie manager - */
 jQuery.awc = function(name, value, options) {
     if (typeof value != 'undefined') {
@@ -113,7 +117,7 @@ function diggcomment(cid, type, diggnum, burynum){
 	}
 }
 function checkifcandigg(cid){
-	if($.awc('cmtdiggdigg'+cid) == '1'){
+	if($.awc('dcmt'+cid) == '1'){
 		return false;
 	}
 	return true;
