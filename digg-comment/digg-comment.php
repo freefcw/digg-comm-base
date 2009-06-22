@@ -157,18 +157,6 @@ class digg_comment
   }
 
   /**
-   * write some inline js into head
-   *
-   * @return void
-   */
-  public function echo_js()
-  {
-    echo '<script type="text/javascript" >var cmt_digg_vote_down = "' . get_option('cmt_digg_vote_down')
-      . '";var cmt_digg_vote_up = "' . get_option('cmt_digg_vote_up')
-      . '";var url = "'.get_option('siteurl').'";</script>';
-  }
-
-  /**
    * add js link in the page
    *
    * @return void
@@ -182,6 +170,12 @@ class digg_comment
     wp_enqueue_script('digg_script');
     // or you can direct add script into list
     //wp_enqueue_script('digg_script', $url, array('jquery'), '1.0', TRUE);
+
+    wp_localize_script( 'digg_script', 'WPDiggComment', array(
+	  	'cmt_digg_vote_up' => get_option('cmt_digg_vote_up'),
+	  	'cmt_digg_vote_down' => get_option('cmt_digg_vote_down'),
+	    'siteurl' => get_option('siteurl')
+		));
   }
 
   /**
@@ -276,6 +270,34 @@ class digg_comment
 
 
 //globe part
+
+/**
+ *
+ *
+ *
+ *
+ */
+function get_most_digg_post()
+{
+  global $wpdb;
+
+  $sql = "SELECT
+            comment_post_ID, sum(digg + bury) AS digg, {$wpdb->posts}.post_title, {$wpdb->posts}.guid
+          FROM
+            {$wpdb->commmets}
+          LEFT JOIN
+            {$wpdb->posts}
+          ON
+            {$wpdb->commmets}.comment_post_ID = {$wpdb->posts}.ID
+          WHERE
+            comment_date > '2009-06-14 23:57:43'
+          GROUP BY
+            comment_post_ID
+          ORDER BY digg DESC
+            LIMIT 5";
+  #
+}
+
 /**
  * 当$type为数字时，表示评论id，这时获取的是关于某偏文章的的评论的digg降序输出
  * 当$type为daily、weekly、monthly、yearly时，获取的是对应日、周、月、年之内的评论的digg降序输出
@@ -373,7 +395,6 @@ add_filter('comment_text', array(&$cmt_digg , 'add_item'), 999);
 // inject javascript and styles into head section
 add_action('wp_print_styles', array(&$cmt_digg, 'add_cssfile'));
 add_action('wp_print_scripts', array(&$cmt_digg, 'add_jsfile'));
-add_action('wp_head', array(&$cmt_digg, 'echo_js'));
 
 // Action Hook
 // Adds option in admin menu

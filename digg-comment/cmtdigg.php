@@ -41,7 +41,7 @@ class cmtdigg
                 `{wpdb->prefix}diggc_log`
             WHERE
                 time< {$etime}";
-    setcookie('cmtdiggdigg' . $this->_cmt_id, 1, $_SERVER['REQUEST_TIME'] + 61104000);
+    setcookie('dcmt' . $this->_cmt_id, 1, $_SERVER['REQUEST_TIME'] + 61104000);
   }
 
   /**
@@ -146,7 +146,7 @@ class cmtdigg
 
     //FIXME: there is something wrong with it!!!!
 
-    if (isset($_COOKIE['cmtdiggdigg' . $cid]) && $_COOKIE['cmtdiggdigg' . $cid]) {
+    if (isset($_COOKIE['dcmt' . $cid]) && $_COOKIE['dcmt' . $cid]) {
       return TRUE;
     }
     $etime = $_SERVER['REQUEST_TIME'] - 3600; //a hour
