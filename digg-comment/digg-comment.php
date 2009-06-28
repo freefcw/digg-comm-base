@@ -271,32 +271,7 @@ class digg_comment
 
 //globe part
 
-/**
- *
- *
- *
- *
- */
-function get_most_digg_post()
-{
-  global $wpdb;
 
-  $sql = "SELECT
-            comment_post_ID, sum(digg + bury) AS digg, {$wpdb->posts}.post_title, {$wpdb->posts}.guid
-          FROM
-            {$wpdb->commmets}
-          LEFT JOIN
-            {$wpdb->posts}
-          ON
-            {$wpdb->commmets}.comment_post_ID = {$wpdb->posts}.ID
-          WHERE
-            comment_date > '2009-06-14 23:57:43'
-          GROUP BY
-            comment_post_ID
-          ORDER BY digg DESC
-            LIMIT 5";
-  #
-}
 
 /**
  * 当$type为数字时，表示评论id，这时获取的是关于某偏文章的的评论的digg降序输出
@@ -388,14 +363,14 @@ $cmt_digg = new digg_comment();
 register_activation_hook(__FILE__, array(&$cmt_digg , 'install'));
 // uninstallation
 register_activation_hook(__FILE__, array(&$cmt_digg , 'uninstall'));
+if(!is_admin()){
+	// Filter, add the vote data to each comment thread
+	add_filter('comment_text', array(&$cmt_digg , 'add_item'), 999);
 
-// Filter, add the vote data to each comment thread
-add_filter('comment_text', array(&$cmt_digg , 'add_item'), 999);
-
-// inject javascript and styles into head section
-add_action('wp_print_styles', array(&$cmt_digg, 'add_cssfile'));
-add_action('wp_print_scripts', array(&$cmt_digg, 'add_jsfile'));
-
+	// inject javascript and styles into head section
+	add_action('wp_print_styles', array(&$cmt_digg, 'add_cssfile'));
+	add_action('wp_print_scripts', array(&$cmt_digg, 'add_jsfile'));
+}
 // Action Hook
 // Adds option in admin menu
 add_action('admin_menu', array(&$cmt_digg , 'wpadmin'));
